@@ -16,18 +16,20 @@ collections:
         fields:
           # Root-Feld: Die Liste der Immobilien, die das Array in der JSON darstellt
           - label: "Alle Immobilien-Einträge"
-            name: "items"
+            name: "items" # Behalte diesen Namen!
             widget: "list"
             summary: "{{fields.titel}} in {{fields.stadt}}"
             fields:
               # Einzelne Felder für jedes Immobilien-Objekt
-              - {label: "Titel", name: "titel", widget: "string", required: true}
-              - {label: "Stadt", name: "stadt", widget: "string", required: true}
-              - {label: "Zimmer", name: "zimmer", widget: "number", min: 1, required: true}
-              - {label: "Größe (qm)", name: "groesse_qm", widget: "number", min: 10, required: true}
-              - {label: "Kaufpreis (€)", name: "kaufpreis", widget: "number", min: 10000, required: true}
-              - {label: "Bild-URL", name: "bild_url", widget: "image", required: true}
-              - label: "Key Facts (pro Zeile)"
-                name: "key_facts"
+              - { label: "Titel", name: "titel", widget: "string", required: true }
+              - { label: "Stadt", name: "stadt", widget: "string", required: true }
+              - { label: "Zimmer", name: "zimmer", widget: "number", min: 1, required: true }
+              - { label: "Größe (qm)", name: "groesse_qm", widget: "number", min: 10, required: true }
+              - { label: "Kaufpreis (€)", name: "kaufpreis", widget: "number", min: 10000, required: true }
+              - { label: "Bild-URL", name: "bild_url", widget: "image", required: true }
+              
+              # FINAL KORREKTE DEFINITION FÜR KEY FACTS (als Liste von Strings)
+              - label: "Key Facts"
+                name: "key_facts" # Dieses Feld wird den Array-Wert speichern
                 widget: "list"
-                field: {label: Fact, name: fact, widget: string, required: true}
+                field: { label: "Fakt", name: "fakt", widget: "string" } # Fügt einen einfachen String-Eintrag hinzu
