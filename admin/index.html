@@ -5,19 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Immobilien-Editor (Decap CMS)</title>
 
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    <script>
-        window.CMS_MANUAL_INIT = true;
-        document.addEventListener('DOMContentLoaded', function() {
-            CMS.init({
-                config: {
-                    config_path: 'admin/config.yml', // Stellt sicher, dass die Konfiguration gefunden wird
-                },
-                enableIdentityWidget: true,
-                html: '#cms-root' // Zielt auf den expliziten Container
-            });
-        });
-    </script>
     <style>
         html, body {
             height: 100%;
@@ -26,6 +13,26 @@
     </style>
 </head>
 <body>
+
 <div id="cms-root"></div>
+
+<script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+<script>
+    // Erzwingt die manuelle Initialisierung
+    window.CMS_MANUAL_INIT = true;
+
+    // Stellt sicher, dass das DOM geladen ist, bevor wir CMS.init aufrufen
+    document.addEventListener('DOMContentLoaded', function() {
+        // WICHTIG: Verwenden Sie hier CMS.init, nicht DecapCMS.init
+        CMS.init({
+            config: {
+                config_path: 'admin/config.yml', // Pfad zur Konfigurationsdatei
+            },
+            enableIdentityWidget: true, // Aktiviert den Netlify Identity Login
+            html: '#cms-root' // Ziel-Container für das CMS
+        });
+    });
+</script>
 </body>
 </html>
