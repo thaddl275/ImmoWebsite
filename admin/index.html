@@ -6,7 +6,18 @@
     <title>Immobilien-Editor (Decap CMS)</title>
 
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-
+    <script>
+        window.CMS_MANUAL_INIT = true;
+        document.addEventListener('DOMContentLoaded', function() {
+            CMS.init({
+                config: {
+                    config_path: 'admin/config.yml', // Stellt sicher, dass die Konfiguration gefunden wird
+                },
+                enableIdentityWidget: true,
+                html: '#cms-root' // Zielt auf den expliziten Container
+            });
+        });
+    </script>
     <style>
         html, body {
             height: 100%;
