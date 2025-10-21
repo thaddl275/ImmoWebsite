@@ -1,35 +1,36 @@
 backend:
   name: git-gateway
   branch: main
-  
+
 publish_mode: editorial_workflow
-media_folder: "bilder"
-public_folder: "/bilder"
+media_folder: "bilder" # Wohin Bilder hochgeladen werden
+public_folder: "/bilder" # Wie die Bild-URLs in der JSON aussehen
 
-# WICHTIG: Verwende 'files' anstelle von 'collections' und verschachtele die Felder korrekt.
-# Die Hauptstruktur ist eine Liste von "files", nicht eine Liste von "collections".
-
+# Korrigierte Struktur: Die äußere Ebene ist die "Collections List".
 collections:
-  - name: "daten"
-    label: "Immobilien Daten"
+  # Das ist dein einziges "Collection"-Element, das deine einzelne JSON-Datei verwaltet.
+  - name: "immobilien_verwaltung"
+    label: "Immobilien Verwaltung"
     files:
-      - file: "immobilien.json" # Zielt auf die Datei im Root-Verzeichnis
+      - file: "immobilien.json" # Zielt auf deine JSON-Datei im Root-Verzeichnis
         label: "Immobilien Liste"
         name: "immobilien_liste"
         fields:
-          # Das Widget 'list' erstellt das Array, das dein Skript erwartet
-          - label: "Immobilien-Einträge"
-            name: "items"
+          # Der Widget 'list' erstellt das JSON-Array an der Wurzel der Datei, 
+          # das dein 'script.js' erwartet.
+          - label: "Alle Immobilien-Einträge"
+            name: "items" # Der Name wird im finalen JSON-Array ignoriert (ist nur Label im CMS)
             widget: "list"
-            summary: "{{fields.titel}} ({{fields.stadt}})"
+            summary: "{{fields.titel}} in {{fields.stadt}}" # Vorschau in der Liste
             fields:
               # Deine einzelnen Immobilienfelder:
-              - {label: "Titel", name: "titel", widget: "string"}
-              - {label: "Stadt", name: "stadt", widget: "string"}
-              - {label: "Zimmeranzahl", name: "zimmer", widget: "number", min: 1}
-              - {label: "Kaufpreis (€)", name: "kaufpreis", widget: "number", min: 10000}
-              - {label: "Bild", name: "bild_url", widget: "image"} # Widget 'image' für den Upload
-              - label: "Key Facts"
+              - {label: "Titel", name: "titel", widget: "string", required: true}
+              - {label: "Stadt", name: "stadt", widget: "string", required: true}
+              - {label: "Zimmer", name: "zimmer", widget: "number", min: 1, required: true}
+              - {label: "Größe (qm)", name: "groesse_qm", widget: "number", min: 10, required: true}
+              - {label: "Kaufpreis (€)", name: "kaufpreis", widget: "number", min: 10000, required: true}
+              - {label: "Bild-URL", name: "bild_url", widget: "image", required: true} # Ermöglicht den Upload
+              - label: "Key Facts (pro Zeile)"
                 name: "key_facts"
                 widget: "list"
-                field: {label: Fact, name: fact, widget: string}
+                field: {label: Fact, name: fact, widget: string, required: true}
