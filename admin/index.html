@@ -22,15 +22,14 @@
     // Erzwingt die manuelle Initialisierung
     window.CMS_MANUAL_INIT = true;
 
-    // Stellt sicher, dass das DOM geladen ist, bevor wir CMS.init aufrufen
+    // Die DOMContentLoaded-Prüfung ist optional, aber sauber
     document.addEventListener('DOMContentLoaded', function() {
-        // WICHTIG: Verwenden Sie hier CMS.init, nicht DecapCMS.init
         CMS.init({
             config: {
-                config_path: 'admin/config.yml', // Pfad zur Konfigurationsdatei
+                config_path: 'admin/config.yml', // Stellt sicher, dass die Konfiguration gefunden wird
             },
-            enableIdentityWidget: true, // Aktiviert den Netlify Identity Login
-            html: '#cms-root' // Ziel-Container für das CMS
+            enableIdentityWidget: true,
+            html: '#cms-root' // Zielt auf den Container ab
         });
     });
 </script>
