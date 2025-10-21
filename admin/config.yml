@@ -1,0 +1,34 @@
+# config.yml
+backend:
+  name: git-gateway # Nutzt die Netlify-Authentifizierung
+  branch: main       # Der Branch, auf dem gearbeitet wird (bei dir wahrscheinlich 'main' oder 'master')
+
+publish_mode: editorial_workflow # Optional: Ermöglicht Entwürfe und Veröffentlichung
+media_folder: "bilder"           # WO die Bilder im Git-Repo gespeichert werden
+public_folder: "/bilder"         # WIE die URLs in der JSON aussehen sollen (z.B. /bilder/haus.jpg)
+
+collections:
+  - file: "immobilien.json" # Zielt auf deine bestehende JSON-Datei im Stammverzeichnis ab
+    label: "Immobilien Portfolio"
+    name: "immobilien-liste"
+    description: "Hier können Sie neue Einträge hinzufügen und bestehende bearbeiten."
+    fields:
+      - label: "Immobilienliste"
+        name: "items"
+        widget: "list"
+        summary: "{{fields.titel}} ({{fields.stadt}})" # Anzeige-Vorschau in der Liste
+        fields:
+          # Felder für die JSON-Einträge:
+          - {label: "ID", name: "id", widget: "number", min: 1, value: 999, disabled: true}
+          - {label: "Titel", name: "titel", widget: "string", required: true}
+          - {label: "Stadt", name: "stadt", widget: "string", required: true}
+          - {label: "Zimmeranzahl", name: "zimmer", widget: "number", min: 1, required: true}
+          - {label: "Größe (m²)", name: "groesse_qm", widget: "number", min: 10, required: true}
+          - {label: "Kaufpreis (€)", name: "kaufpreis", widget: "number", min: 10000, required: true}
+          - {label: "Bild", name: "bild_url", widget: "image", required: true, hint: "Hier Bild hochladen. Wird in den Ordner /bilder gespeichert."}
+          # Key Facts als verschachtelte Liste für Array-Format
+          - label: "Key Facts"
+            name: "key_facts"
+            widget: "list"
+            field: {label: Fact, name: fact, widget: string, required: true}
+            hint: "Jeden Fakt einzeln hinzufügen (z.B. Balkon, Garage)."
