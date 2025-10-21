@@ -62,12 +62,18 @@
 <script>
     if (window.netlifyIdentity) {
         window.netlifyIdentity.on("init", user => {
-            if (!user) {
-                // Leitet Nicht-Eingeloggte auf die Admin-Seite, falls sie den Link nutzen
-                if (window.location.hash.includes("invite_token") || window.location.hash.includes("recovery_token")) {
-                    // Die Umleitung zur Admin-Seite MUSS HIER geschehen
+            // Prüfen, ob ein Token im Hash ist und kein Benutzer eingeloggt ist
+            if (!user && (window.location.hash.includes("invite_token") || window.location.hash.includes("recovery_token"))) {
+
+                // **WICHTIG:** Verzögerung von 1500 Millisekunden (1,5 Sekunden) hinzufügen
+                setTimeout(() => {
+
+                    // Wir leiten direkt zur /admin-Seite weiter, wo das Formular sichtbar ist
+                    // Wir behalten den Hash (#token=...) bei
                     window.location.href = "/admin" + window.location.hash;
-                }
+
+                }, 1500); // 1.5 Sekunden Verzögerung
+
             }
         });
     }
