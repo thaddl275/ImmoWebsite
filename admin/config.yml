@@ -1,11 +1,12 @@
 backend:
-  name: git-gateway
-  branch: main # oder master, je nach deinem Hauptbranch    # WICHTIG: Nutze 'test-repo' für lokale Tests, um Login zu umgehen
+  name: git-gateway # Dies ist korrekt für Netlify
+  branch: main      # Dein Haupt-Branch (wahrscheinlich 'main' oder 'master')
 
-media_folder: "bilder"
-public_folder: "/bilder"
+publish_mode: editorial_workflow # Optional, aber empfehlenswert
+media_folder: "images"           # MUSS zu deinem GitHub-Ordnernamen passen
+public_folder: "/images"         # MUSS zu deinem GitHub-Ordnernamen passen
 
-# Definition der Collections (eine Liste von Dateien)
+# Definition der Collections (File Collection zum Bearbeiten einer einzelnen JSON-Datei)
 collections:
   - name: "immobilien_verwaltung"
     label: "Immobilien Verwaltung"
@@ -16,7 +17,7 @@ collections:
         fields:
           # Root-Feld: Die Liste der Immobilien, die das Array in der JSON darstellt
           - label: "Alle Immobilien-Einträge"
-            name: "items" # Behalte diesen Namen!
+            name: "items"
             widget: "list"
             summary: "{{fields.titel}} in {{fields.stadt}}"
             fields:
@@ -28,8 +29,9 @@ collections:
               - { label: "Kaufpreis (€)", name: "kaufpreis", widget: "number", min: 10000, required: true }
               - { label: "Bild-URL", name: "bild_url", widget: "image", required: true }
               
-              # FINAL KORREKTE DEFINITION FÜR KEY FACTS (als Liste von Strings)
+              # FINALE DEFINITION FÜR KEY FACTS (als Liste von Strings)
               - label: "Key Facts"
-                name: "key_facts" # Dieses Feld wird den Array-Wert speichern
+                name: "key_facts"
                 widget: "list"
-                field: { label: "Fakt", name: "fakt", widget: "string" } # Fügt einen einfachen String-Eintrag hinzu
+                # Erstellt einen String-Array, der wie erwartet in JSON gespeichert wird
+                field: { label: "Fakt", name: "fakt", widget: "string" }
